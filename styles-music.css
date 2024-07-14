@@ -1,0 +1,166 @@
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: monospace;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.title {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.title .logo-image {
+    width: 400px;
+    height: auto;
+    max-width: 100%;
+    position: relative;
+    z-index: 1;
+    animation: flicker1 1s infinite, flicker2 1.5s infinite 0.5s;
+    filter: contrast(1.2) saturate(1.5) brightness(0.9);
+}
+
+.title .logo-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        0deg, 
+        rgba(255, 255, 255, 0.1) 1%, 
+        rgba(0, 0, 0, 0.1) 2%
+    );
+    background-size: 100% 2px;
+    z-index: 1;
+    mix-blend-mode: multiply;
+}
+
+.title .logo-image::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.3) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+@keyframes flicker1 {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+        visibility: visible;
+    }
+    20%, 24%, 55% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes flicker2 {
+    0%, 18%, 20%, 22%, 24%, 52%, 54%, 100% {
+        opacity: 1;
+        visibility: visible;
+    }
+    19%, 21%, 23%, 53% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #fff;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.header a {
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    border: 1px solid #fff;
+    color: #fff;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.header a:hover {
+    color: #1DB954;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.song, .playlist {
+    flex: 1 1 300px;
+    margin: 20px;
+}
+
+.song h2, .playlist h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.song-container, .playlist-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.song-container iframe, .playlist-container iframe {
+    border-radius: 12px;
+    width: 100%;
+    height: 352px;
+    border: none;
+}
+
+.footer-container {
+    width: 100%;
+    padding: 20px;
+    border-top: 1px solid #fff;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+
+.footer {
+    text-align: center;
+}
+
+.footer a {
+    text-decoration: none;
+    color: inherit;
+    margin-left: 10px;
+}
+
+.footer a:hover {
+    color: #1d1d1d;
+}

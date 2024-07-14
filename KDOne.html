@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDOne</title>
+    <link rel="stylesheet" href="KDOne.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">KDOne</div>
+        <div class="animation"></div>
+        <audio id="lofi-audio" autoplay loop>
+            <source src="https://live.hunter.fm/lofi_high" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    <script>
+        // Cookies
+        document.cookie = "username=@kdaui.; SameSite=Lax; Secure";
+        // Synchronize audio playback
+        const audio = document.getElementById('lofi-audio');
+        const serverTimeUrl = 'https://worldtimeapi.org/api/timezone/Etc/UTC';
+
+        async function syncAudio() {
+            try {
+                const response = await fetch(serverTimeUrl);
+                const data = await response.json();
+                const serverTime = new Date(data.utc_datetime).getTime();
+                const localTime = new Date().getTime();
+                const timeDifference = serverTime - localTime;
+
+                // Assuming the stream starts at a specific server time
+                const streamStartTime = new Date('2024-06-23T00:00:00Z').getTime();
+                const currentStreamTime = (serverTime - streamStartTime) / 1000;
+
+                audio.currentTime = currentStreamTime;
+                audio.play();
+            } catch (error) {
+                console.error('Error syncing audio:', error);
+            }
+        }
+
+        syncAudio();
+    </script>
+</body>
+</html>
