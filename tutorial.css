@@ -27,7 +27,7 @@ nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    justify-content: center;
+    justify-content: left;
 }
 
 nav ul li {
