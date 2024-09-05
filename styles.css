@@ -141,16 +141,137 @@ body {
     justify-content: center;
 }
 
-.footer {
-    text-align: center;
+a {
+    color: inherit;
+    text-decoration: underline;
 }
 
-.footer a {
+a:hover {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.friend {
+	border: 1px solid #fff;
+	box-sizing: border-box;
+	margin-bottom: 20px;
+	width: 40%
+}
+
+.friend header {
+	margin-left: 200px;
+	position: relative;
+	top: -15px;
+	text-decoration: underline;
+}
+
+.friend marquee {
+	position: relative;
+	top: -20px;
+}
+
+.manga-container {
+	display:  left-side;
+    width: 40%;
+    padding: 10px;
+    color: inherit;
+    border: 1px solid #fff;
+	align-self: left;
+	margin-right: 600px;
+	
+}
+
+.manga-container h1 {
+    font-size: 24px;
+    text-align: left;
+	text-decoration: underline;
+}
+
+.manga-container ul li img {
+    max-width: 55%;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.music-container {
+	display: right-side;
+    width: 40%;
+    padding: 10px;
+    color: inherit;
+    border: 1px solid #fff;
+    margin-left: 600px;
+    margin-top: -3600px;
+	margin-bottom: 20px;
+}
+
+.music-container h1 {
+    font-size: 24px;
+    text-align: left;
+	text-decoration: underline;
+}
+
+.cs-ft {
+	display: right-side;
+    width: 40%;
+    padding: 10px;
+    color: inherit;
+    border: 1px solid #fff;
+    margin-left: 600px;
+    margin-top: -3294px;
+	margin-bottom: 20px;
+}
+
+.cs-ft h1 {
+	text-decoration: underline;
+}
+
+.cs-ft .custom-footer a {
     text-decoration: none;
     color: inherit;
-    margin-left: 10px;
+    margin: 0 0px;
+	font-size: 24px
 }
 
-.footer a:hover {
-    color: #1d1d1d;
+.cs-ft .custom-footer a:hover {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.proj {
+	display: right-side;
+    width: 40%;
+    padding: 10px;
+    color: inherit;
+    border: 1px solid #fff;
+    margin-left: 600px;
+    margin-top: 31px;
+	margin-bottom: 20px;
+}
+
+.proj h1 {
+	text-decoration: underline;
+}
+
+.proj .projects a {
+    text-decoration: none;
+    color: inherit;
+    margin: 0 0px;
+	font-size: 24px;
+}
+
+.proj .projects a:hover {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.quote {
+	display: right-side;
+    width: 40%;
+    padding: 10px;
+    color: inherit;
+    border: 1px solid #fff;
+    margin-left: 600px;
+    margin-top: 2700px;
+	margin-bottom: 20px;
 }
