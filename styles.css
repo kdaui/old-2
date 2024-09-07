@@ -169,3 +169,11 @@ a:hover {
 	position: relative;
 	top: -20px;
 }
+
+.chat {
+    border: 1px solid #fff;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+	margin-bottom: 20px;
+}
