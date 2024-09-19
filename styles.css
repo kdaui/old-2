@@ -2,7 +2,6 @@ body {
     background-color: #000;
     color: #fff;
     font-family: monospace;
-	font-size: 15px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -80,8 +79,8 @@ body {
 .main-container {
     display: flex;
     flex-direction: row;
-    width: 60%;
-	margin-right: 450px;
+    width: 100%;
+    max-width: 1200px;
     padding: 20px;
     box-sizing: border-box;
 }
@@ -95,13 +94,10 @@ body {
 }
 
 .cont {
-    display: flex;
+    flex: 2;
     padding: 20px;
     border: 1px solid #fff;
     box-sizing: border-box;
-	margin-top: 0px;
-	margin-right: 470px;
-	width: 55%;
 }
 
 .content {
@@ -122,15 +118,6 @@ body {
     width: 100%;
 }
 
-.facts a {
-	transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.facts a:hover {
-    color: #ff6347; /* Changes color on hover */
-    transform: scale(2.0); /* Slight zoom effect */
-}
-
 .facts h2 {
     font-size: 24px;
     margin-bottom: 10px;
@@ -143,6 +130,15 @@ body {
 
 .facts li {
     margin-bottom: 5px;
+}
+
+.footer-container {
+    width: 100%;
+    padding: 20px;
+    border-top: 1px solid #fff;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
 }
 
 a {
@@ -158,41 +154,26 @@ a:hover {
 .friend {
 	border: 1px solid #fff;
 	box-sizing: border-box;
-	margin-top: 20px;
 	margin-bottom: 20px;
-	margin-left: 600px;
-	width: 20%
+	width: 40%
 }
 
 .friend header {
-	margin-left: 50px;
+	margin-left: 200px;
 	position: relative;
 	top: -15px;
 	text-decoration: underline;
 }
 
 .friend marquee {
-	position: center;
-	margin-left: 50px;
+	position: relative;
+	top: -20px;
 }
 
-.chatroom {
+.chat {
     border: 1px solid #fff;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-	margin-top: 50px;
 	margin-bottom: 20px;
-}
-
-.csft {
-    width: 20%;
-    padding: 20px;
-    border: 1px solid #fff;
-	margin-left: 700px;
-	margin-top: -789px;
-}
-
-.ft {
-	font-size: 20px;
 }
