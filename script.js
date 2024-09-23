@@ -1,3 +1,4 @@
+// This is used to remember the old website //
 document.addEventListener('DOMContentLoaded', () => {
     const loadingText = `
 
