@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="album.css">
+    <title>Album Covers</title>
+</head>
+<body>
+    <div class="title">
+        <img src="images/albums.png" alt="ALBUMS" class="logo-image" style="width: 300px; height: auto;">
+	</div>
+
+	<div class="home-button">
+		<a href="index.html">Home</a>
+	</div>
+
+    <div class="main-container">
+        <div class="container">
+            <div class="album-covers">
+                <!-- Albums added here --!>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-container">
+        <p>© 2024 The Breather. All rights reserved.</p>
+    </div>
+</body>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const albumCovers = [
+        { title: "STRINGS", cover: "images/strings.png" },
+        { title: "4 MARKER", cover: "images/4mk.png" },
+		{ title: "CRUMBLE", cover: "images/crumble.png" },
+    ];
+
+    const container = document.querySelector('.album-covers');
+
+    albumCovers.forEach(album => {
+        const albumDiv = document.createElement('div');
+        albumDiv.classList.add('album');
+
+        const img = document.createElement('img');
+        img.src = album.cover;
+        img.alt = album.title;
+
+        const title = document.createElement('h3');
+        title.textContent = album.title;
+
+        albumDiv.appendChild(img);
+        albumDiv.appendChild(title);
+        container.appendChild(albumDiv);
+    });
+});
+</script>
+</html>

@@ -1,0 +1,111 @@
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: monospace;
+}
+
+.title {
+    text-align: center;
+    margin: 20px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.title .logo-image {
+    width: 400px;
+    height: auto;
+    max-width: 100%;
+    animation: flicker1 1s infinite, flicker2 1.5s infinite 0.5s;
+    filter: contrast(1.2) saturate(1.5) brightness(0.9);
+    display: block;
+    margin: 0 auto;
+}
+
+.album-covers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.home-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    border: 1px solid #aaa; /* Light gray border */
+    background-color: #333; /* Dark gray background */
+    box-sizing: border-box;
+    z-index: 10;
+    border-radius: 5px;
+}
+
+.home-button a {
+    color: #aaa;
+    text-decoration: none;
+    font-family: monospace;
+    font-weight: bold;
+    display: block;
+}
+
+.home-button:hover {
+    background-color: #444;
+}
+
+.home-button:active {
+    transform: none;
+    box-shadow: none;
+}
+
+.album {
+    border: 1px solid #fff;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    flex: 1 1 calc(25% - 40px);
+    max-width: 250px;
+    background-color: #111;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+}
+
+.album img {
+    width: 100%;
+    height: auto;
+    max-width: 200px;
+    border: 1px solid #fff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    transition: filter 0.3s ease-in-out;
+}
+
+.album h3 {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 10px;
+    word-break: break-word;
+}
+
+.album:hover {
+    transform: scale(1.05);
+    border-color: #ffeb3b;
+}
+
+.album:hover img {
+    filter: contrast(1.3) brightness(1.1);
+}
+
+.footer-container {
+    width: 100%;
+    padding: 20px;
+    border-top: 1px solid #fff;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
