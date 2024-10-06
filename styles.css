@@ -248,3 +248,10 @@ a:hover {
     align-items: center;
     margin-left: 20px;
 }
+
+.Projects {
+    padding: 20px;
+    border: 1px solid #fff;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
