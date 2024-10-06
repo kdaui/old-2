@@ -101,6 +101,10 @@ body {
 	color: #003300;
 }
 
+#red {
+	color: #d40000;
+}
+
 .main-container {
     display: flex;
     flex-direction: row;
