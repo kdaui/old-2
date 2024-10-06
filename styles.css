@@ -8,6 +8,7 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
+	overflow-x: hidden;
 }
 
 .title {
@@ -74,6 +75,30 @@ body {
         opacity: 0;
         visibility: hidden;
     }
+}
+
+#blue {
+    color: #007BFF;
+}
+ 
+#grey {
+	color: #808080;
+}
+
+#yellow {
+	color: #ffd700;
+}
+
+#orange {
+	color: #ff8c00;
+}
+
+#sea {
+	color: #20b2aa;
+}
+
+#green {
+	color: #003300;
 }
 
 .main-container {
@@ -170,10 +195,22 @@ a:hover {
 	top: -20px;
 }
 
+.widget-container {
+	display: flex;
+	align-items: flex-start;
+}
+
+
 .chat {
     border: 1px solid #fff;
     box-sizing: border-box;
     display: flex;
-    justify-content: center;
-	margin-bottom: 20px;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.moon-widget {
+	border: 1px solid #fff;
+    box-sizing: border-box;
+	margin-left: 20px;
 }
