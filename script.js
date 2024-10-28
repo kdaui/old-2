@@ -1,46 +1,66 @@
 async function fetchBlueskyPost() {
     try {
-        const response = await fetch('https://api-amber-psi.vercel.app/');
+        const response = await fetch("https://api-amber-psi.vercel.app/api/fetchBluesky");
+        if (!response.ok) {
+            throw new Error("Failed to fetch Bluesky post");
+        }
+        
         const data = await response.json();
+        console.log("Response Data:", data); // Log the full response for debugging
 
+        // Ensure the feed exists and has posts
+        const bskyDiv = document.querySelector(".bsky"); // Select by class
         if (data.feed && data.feed.length > 0) {
-            const post = data.feed[0].post;
-            const postContent = post.record.text;
-            const author = post.author;
-            const avatar = author.avatar;
-            const displayName = author.displayName;
+            // Get the most recent post
+            const recentPost = data.feed[0].post;
+            bskyDiv.innerHTML = "<h3>Bsky-ing</h3>"; // Keep title
 
-            // Calculate time since the post
-            const createdAt = new Date(post.createdAt);
-            const now = new Date();
-            const secondsAgo = Math.floor((now - createdAt) / 1000);
-            let timeAgo;
+            // Extract relevant information
+            const postText = recentPost.record.text; // Assuming the text is in record.text
+            const postAuthor = recentPost.author.displayName; // Assuming displayName is here
+            const postCreatedAt = new Date(recentPost.createdAt);
+            const timeSince = timeAgo(postCreatedAt); // Call to a function that formats time
+            const postUri = recentPost.uri;
+            const avatarUrl = recentPost.author.avatar; // Assuming avatar URL is in the author object
 
-            if (secondsAgo < 60) {
-                timeAgo = `${secondsAgo} seconds ago`;
-            } else if (secondsAgo < 3600) {
-                timeAgo = `${Math.floor(secondsAgo / 60)} minutes ago`;
-            } else if (secondsAgo < 86400) {
-                timeAgo = `${Math.floor(secondsAgo / 3600)} hours ago`;
-            } else {
-                timeAgo = `${Math.floor(secondsAgo / 86400)} days ago`;
-            }
-
-            document.querySelector(".bsky").innerHTML = `
-                <h3>Bsky-ing</h3>
-                <div class="post">
-                    <img src="${avatar}" alt="Avatar" class="avatar">
-                    <span><strong>${displayName}</strong> • ${timeAgo}</span>
-                    <p>${postContent}</p>
+            // Display the post in your HTML
+            bskyDiv.innerHTML = `
+                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <img src="${avatarUrl}" alt="${postAuthor}'s avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                    <div>
+                        <strong>${postAuthor}</strong> • <small>${timeSince}</small>
+                        <div>${postText}</div>
+                        <small><a href="${postUri}" target="_blank">View Post</a></small>
+                    </div>
                 </div>
             `;
         } else {
-            document.querySelector(".bsky").innerHTML = "<h3>Bsky-ing</h3><p>No posts found.</p>";
+            console.error("No posts found in the feed.");
+            bskyDiv.innerHTML = "<p>No posts found.</p>"; // Replace content here
         }
     } catch (error) {
         console.error("Error loading post:", error);
-        document.querySelector(".bsky").innerHTML = "<h3>Bsky-ing</h3><p>Error loading post.</p>";
+        document.querySelector(".bsky").innerHTML = "<p>Error loading post.</p>"; // Update this message as well
     }
 }
 
+// Function to calculate time since the post was created
+function timeAgo(date) {
+    const now = new Date();
+    const seconds = Math.floor((now - date) / 1000);
+    let interval = Math.floor(seconds / 31536000);
+    
+    if (interval > 1) return `${interval} years ago`;
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) return `${interval} months ago`;
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) return `${interval} days ago`;
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) return `${interval} hours ago`;
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) return `${interval} minutes ago`;
+    return `${seconds} seconds ago`;
+}
+
+// Call the function to fetch and display the post
 fetchBlueskyPost();
