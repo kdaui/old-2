@@ -10,7 +10,7 @@ async function fetchBlueskyPost() {
 
         // Ensure the feed exists and has posts
         const bskyDiv = document.querySelector(".bsky"); // Select by class
-        bskyDiv.innerHTML = "<h3>Bsky-ing</h3>"; // Keep the title
+        bskyDiv.innerHTML = "<h3>Bsky-ing:</h3>"; // Keep the title
 
         if (data.feed && data.feed.length > 0) {
             // Get the most recent post
