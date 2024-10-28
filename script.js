@@ -10,22 +10,23 @@ async function fetchBlueskyPost() {
 
         // Ensure the feed exists and has posts
         const bskyDiv = document.querySelector(".bsky"); // Select by class
+        bskyDiv.innerHTML = "<h3>Bsky-ing</h3>"; // Keep the title
+
         if (data.feed && data.feed.length > 0) {
             // Get the most recent post
             const recentPost = data.feed[0].post;
 
             // Extract relevant information
-            const postText = recentPost.record.text; // Assuming the text is in record.text
-            const postAuthor = recentPost.author.displayName; // Assuming displayName is here
+            const postText = recentPost.record.text;
+            const postAuthor = recentPost.author.displayName;
             const postCreatedAt = new Date(recentPost.createdAt);
-            const timeSince = timeAgo(postCreatedAt); // Call to a function that formats time
+            const timeSince = timeAgo(postCreatedAt);
             const postUri = recentPost.uri;
-            const avatarUrl = recentPost.author.avatar; // Assuming avatar URL is in the author object
+            const avatarUrl = recentPost.author.avatar;
 
-            // Display the post in your HTML
-            bskyDiv.innerHTML = `
+            // Append post content under the title
+            bskyDiv.innerHTML += `
                 <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                <h3>Bsky-ing</h3>
                     <img src="${avatarUrl}" alt="${postAuthor}'s avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
                     <div>
                         <strong>${postAuthor}</strong> • <small>${timeSince}</small>
@@ -36,11 +37,11 @@ async function fetchBlueskyPost() {
             `;
         } else {
             console.error("No posts found in the feed.");
-            bskyDiv.innerHTML = "<p>No posts found.</p>"; // Replace content here
+            bskyDiv.innerHTML += "<p>No posts found.</p>";
         }
     } catch (error) {
         console.error("Error loading post:", error);
-        document.querySelector(".bsky").innerHTML = "<p>Error loading post.</p>"; // Update this message as well
+        document.querySelector(".bsky").innerHTML = "<h3>Bsky-ing</h3><p>Error loading post.</p>";
     }
 }
 
