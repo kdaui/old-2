@@ -249,9 +249,29 @@ a:hover {
     margin-left: 20px;
 }
 
-.Projects {
+.Brojects-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 500px;
     padding: 20px;
+    box-sizing: border-box;
+    gap: 20px;
+}
+
+.Projects {
+    flex: 1;
+    min-width: 45%;
+    padding: 10px;
     border: 1px solid #fff;
-    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.bsky {
+	flex: 1;
+    min-width: 70%;
+    padding: 10px;
+    border: 1px solid #fff;
     box-sizing: border-box;
 }
