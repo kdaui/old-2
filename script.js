@@ -9,6 +9,7 @@ async function fetchBlueskyPost() {
         console.log("Response Data:", data); // Log the full response for debugging
 
         // Ensure the feed exists and has posts
+        const bskyDiv = document.querySelector(".bsky"); // Select by class
         if (data.feed && data.feed.length > 0) {
             // Get the most recent post
             const recentPost = data.feed[0].post;
@@ -19,9 +20,8 @@ async function fetchBlueskyPost() {
             const postCreatedAt = new Date(recentPost.createdAt).toLocaleString(); // Convert to a readable format
             const postUri = recentPost.uri;
 
-            // Display the post in your HTML (you may need to adjust selectors)
-            const postContainer = document.getElementById("post-container");
-            postContainer.innerHTML = `
+            // Display the post in your HTML
+            bskyDiv.innerHTML = `
                 <div>
                     <h3>${postAuthor} said:</h3>
                     <p>${postText}</p>
@@ -31,11 +31,11 @@ async function fetchBlueskyPost() {
             `;
         } else {
             console.error("No posts found in the feed.");
-            document.getElementById("post-container").innerText = "No posts available.";
+            bskyDiv.innerHTML = "<p>No posts found.</p>";
         }
     } catch (error) {
         console.error("Error loading post:", error);
-        document.getElementById("post-container").innerText = "Error loading post.";
+        document.querySelector(".bsky").innerHTML = "<p>Error loading post.</p>";
     }
 }
 
