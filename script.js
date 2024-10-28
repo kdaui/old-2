@@ -13,7 +13,6 @@ async function fetchBlueskyPost() {
         if (data.feed && data.feed.length > 0) {
             // Get the most recent post
             const recentPost = data.feed[0].post;
-            bskyDiv.innerHTML = "<h3>Bsky-ing</h3>"; // Keep title
 
             // Extract relevant information
             const postText = recentPost.record.text; // Assuming the text is in record.text
@@ -26,6 +25,7 @@ async function fetchBlueskyPost() {
             // Display the post in your HTML
             bskyDiv.innerHTML = `
                 <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <h3>Bsky-ing</h3>
                     <img src="${avatarUrl}" alt="${postAuthor}'s avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
                     <div>
                         <strong>${postAuthor}</strong> • <small>${timeSince}</small>
