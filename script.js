@@ -17,16 +17,20 @@ async function fetchBlueskyPost() {
             // Extract relevant information
             const postText = recentPost.record.text; // Assuming the text is in record.text
             const postAuthor = recentPost.author.displayName; // Assuming displayName is here
-            const postCreatedAt = new Date(recentPost.createdAt).toLocaleString(); // Convert to a readable format
+            const postCreatedAt = new Date(recentPost.createdAt);
+            const timeSince = timeAgo(postCreatedAt); // Call to a function that formats time
             const postUri = recentPost.uri;
+            const avatarUrl = recentPost.author.avatar; // Assuming avatar URL is in the author object
 
             // Display the post in your HTML
             bskyDiv.innerHTML = `
-                <div>
-                    <h3>${postAuthor} said:</h3>
-                    <p>${postText}</p>
-                    <small>Posted on ${postCreatedAt}</small>
-                    <a href="${postUri}" target="_blank">View Post</a>
+                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <img src="${avatarUrl}" alt="${postAuthor}'s avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                    <div>
+                        <strong>${postAuthor}</strong> • <small>${timeSince}</small>
+                        <div>${postText}</div>
+                        <small><a href="${postUri}" target="_blank">View Post</a></small>
+                    </div>
                 </div>
             `;
         } else {
@@ -37,6 +41,24 @@ async function fetchBlueskyPost() {
         console.error("Error loading post:", error);
         document.querySelector(".bsky").innerHTML = "<p>Error loading post.</p>"; // Update this message as well
     }
+}
+
+// Function to calculate time since the post was created
+function timeAgo(date) {
+    const now = new Date();
+    const seconds = Math.floor((now - date) / 1000);
+    let interval = Math.floor(seconds / 31536000);
+    
+    if (interval > 1) return `${interval} years ago`;
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) return `${interval} months ago`;
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) return `${interval} days ago`;
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) return `${interval} hours ago`;
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) return `${interval} minutes ago`;
+    return `${seconds} seconds ago`;
 }
 
 // Call the function to fetch and display the post
