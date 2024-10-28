@@ -1,72 +1,36 @@
-// This is used to remember the old website //
-document.addEventListener('DOMContentLoaded', () => {
-    const loadingText = `
+document.addEventListener("DOMContentLoaded", async () => {
+    const bskyDiv = document.querySelector(".bsky p");
 
+    try {
+        // Fetch recent posts
+        const response = await fetch("https://corsproxy.io/?https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=kdaui.bsky.social");
 
- ██████╗ ██╗  ██╗██████╗  █████╗ ██╗   ██╗██╗              
-██╔═══██╗██║ ██╔╝██╔══██╗██╔══██╗██║   ██║██║              
-██║██╗██║█████╔╝ ██║  ██║███████║██║   ██║██║              
-██║██║██║██╔═██╗ ██║  ██║██╔══██║██║   ██║██║              
-╚█║████╔╝██║  ██╗██████╔╝██║  ██║╚██████╔╝██║██╗           
- ╚╝╚═══╝ ╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═╝           
-                                                           
- █████╗ ███╗   ██╗██████╗                                  
-██╔══██╗████╗  ██║██╔══██╗                                 
-███████║██╔██╗ ██║██║  ██║                                 
-██╔══██║██║╚██╗██║██║  ██║                                 
-██║  ██║██║ ╚████║██████╔╝                                 
-╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝                                  
-                                                           
-███████╗██████╗ ██╗███████╗███╗   ██╗██████╗ ███████╗      
-██╔════╝██╔══██╗██║██╔════╝████╗  ██║██╔══██╗██╔════╝      
-█████╗  ██████╔╝██║█████╗  ██╔██╗ ██║██║  ██║███████╗      
-██╔══╝  ██╔══██╗██║██╔══╝  ██║╚██╗██║██║  ██║╚════██║      
-██║     ██║  ██║██║███████╗██║ ╚████║██████╔╝███████║      
-╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═══╝╚═════╝ ╚══════╝      
-                                                           
-██████╗ ██████╗ ███████╗███████╗███████╗███╗   ██╗████████╗
-██╔══██╗██╔══██╗██╔════╝██╔════╝██╔════╝████╗  ██║╚══██╔══╝
-██████╔╝██████╔╝█████╗  ███████╗█████╗  ██╔██╗ ██║   ██║   
-██╔═══╝ ██╔══██╗██╔══╝  ╚════██║██╔══╝  ██║╚██╗██║   ██║   
-██║     ██║  ██║███████╗███████║███████╗██║ ╚████║   ██║   
-╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝   
+        if (!response.ok) throw new Error("Failed to fetch the feed");
 
-
-`;
-
-    const loadingScreen = document.getElementById('loading-screen');
-    const loadingTextElement = document.getElementById('loading-text');
-    const content = document.getElementById('content');
-    
-    let currentLine = 0;
-    const lines = loadingText.trim().split('\n');
-
-    function showNextLine() {
-        if (currentLine < lines.length) {
-            loadingTextElement.innerText += lines[currentLine] + '\n';
-            currentLine++;
-            setTimeout(showNextLine, 100); // Adjust delay as needed
-        } else {
-            loadingScreen.style.opacity = 0;
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-                content.style.display = 'block';
-            }, 1000);
+        const data = await response.json();
+        
+        // Check for posts
+        if (data.feed.length === 0) {
+            bskyDiv.innerHTML = "No posts found.";
+            return;
         }
+
+        const latestPostUri = data.feed[0].post.uri;
+
+        // Generate the oEmbed URL
+        const oEmbedUrl = `https://corsproxy.io/?https://bsky.app/oembed?url=${latestPostUri}`;
+
+        // Fetch the oEmbed HTML for the latest post
+        const oEmbedResponse = await fetch(oEmbedUrl);
+        if (!oEmbedResponse.ok) throw new Error("Failed to fetch oEmbed data");
+
+        const oEmbedData = await oEmbedResponse.json();
+        const postHtml = oEmbedData.html;
+
+        // Display the post
+        bskyDiv.innerHTML = postHtml;
+    } catch (error) {
+        console.error("Error fetching the Bluesky post:", error);
+        bskyDiv.innerHTML = "Failed to load the post.";
     }
-
-    showNextLine();
-
-    async function fetchKanyeQuote() {
-        try {
-            const response = await fetch('https://api.kanye.rest/');
-            const data = await response.json();
-            const quoteElement = document.getElementById('kanye-quote');
-            quoteElement.innerText = `"${data.quote}" - Kanye West`;
-        } catch (error) {
-            console.error('Error fetching the Kanye quote:', error);
-        }
-    }
-
-    fetchKanyeQuote();
 });
