@@ -1,32 +1,43 @@
 async function fetchBlueskyPost() {
     try {
-        const response = await fetch('https://api-amber-psi.vercel.app/api/fetchBluesky');
-        const data = await response.json();
-
-        // Log the entire data response to understand its structure
-        console.log("Response Data:", data);
-
+        const response = await fetch("https://api-amber-psi.vercel.app/api/fetchBluesky");
         if (!response.ok) {
-            throw new Error(data.error || 'Failed to fetch post');
+            throw new Error("Failed to fetch Bluesky post");
         }
+        
+        const data = await response.json();
+        console.log("Response Data:", data); // Log the full response for debugging
 
-        // Check if feeds exist
-        if (!data.feeds || data.feeds.length === 0) {
-            document.querySelector('.bsky').innerHTML = '<h3>Bsky-ing</h3><p>No posts found.</p>';
-            return;
+        // Ensure the feed exists and has posts
+        if (data.feed && data.feed.length > 0) {
+            // Get the most recent post
+            const recentPost = data.feed[0].post;
+
+            // Extract relevant information
+            const postText = recentPost.record.text; // Assuming the text is in record.text
+            const postAuthor = recentPost.author.displayName; // Assuming displayName is here
+            const postCreatedAt = new Date(recentPost.createdAt).toLocaleString(); // Convert to a readable format
+            const postUri = recentPost.uri;
+
+            // Display the post in your HTML (you may need to adjust selectors)
+            const postContainer = document.getElementById("post-container");
+            postContainer.innerHTML = `
+                <div>
+                    <h3>${postAuthor} said:</h3>
+                    <p>${postText}</p>
+                    <small>Posted on ${postCreatedAt}</small>
+                    <a href="${postUri}" target="_blank">View Post</a>
+                </div>
+            `;
+        } else {
+            console.error("No posts found in the feed.");
+            document.getElementById("post-container").innerText = "No posts available.";
         }
-
-        // Get the latest post
-        const latestPost = data.feeds[0]; // Get the first feed (latest post)
-
-        // Assuming the post content is in a property like 'description'
-        const postContent = latestPost.description || "No content available"; // Adjust based on actual structure
-        const bskyDiv = document.querySelector('.bsky');
-        bskyDiv.innerHTML = `<h3>Bsky-ing</h3><p>${postContent}</p>`;
     } catch (error) {
         console.error("Error loading post:", error);
-        document.querySelector('.bsky').innerHTML = '<p>Error loading post.</p>';
+        document.getElementById("post-container").innerText = "Error loading post.";
     }
 }
 
+// Call the function to fetch and display the post
 fetchBlueskyPost();
