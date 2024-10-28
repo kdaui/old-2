@@ -14,15 +14,20 @@ async function fetchBlueskyPost() {
             // Get the most recent post
             const recentPost = data.feed[0].post;
 
-            // Create an embedded post using the URI
+            // Extract relevant information
+            const postText = recentPost.record.text; // Assuming the text is in record.text
+            const postAuthor = recentPost.author.displayName; // Assuming displayName is here
+            const postCreatedAt = new Date(recentPost.createdAt).toLocaleString(); // Convert to a readable format
             const postUri = recentPost.uri;
 
-            // Display the embedded post
+            // Display the post in your HTML
             bskyDiv.innerHTML = `
-                <blockquote class="bsky-embed" data-uri="${postUri}">
-                    <p>Loading post...</p>
-                </blockquote>
-                <script async src="https://bsky.app/embed.js"></script>
+                <div>
+                    <h3>${postAuthor} said:</h3>
+                    <p>${postText}</p>
+                    <small>Posted on ${postCreatedAt}</small>
+                    <a href="${postUri}" target="_blank">View Post</a>
+                </div>
             `;
         } else {
             console.error("No posts found in the feed.");
