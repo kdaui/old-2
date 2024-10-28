@@ -10,7 +10,7 @@ async function fetchBlueskyPost() {
 
         // Ensure the feed exists and has posts
         const bskyDiv = document.querySelector(".bsky"); // Select by class
-        bskyDiv.innerHTML = "<h3>Bsky-ing:</h3>"; // Keep the title
+        bskyDiv.innerHTML = "<h3>Bsky-ing</h3>"; // Keep the title
 
         if (data.feed && data.feed.length > 0) {
             // Get the most recent post
@@ -21,8 +21,12 @@ async function fetchBlueskyPost() {
             const postAuthor = recentPost.author.displayName;
             const postCreatedAt = new Date(recentPost.createdAt);
             const timeSince = timeAgo(postCreatedAt);
-            const postUri = recentPost.uri;
+            const postId = recentPost.uri.split('/').pop(); // Get the post ID
+            const authorHandle = recentPost.author.handle;
             const avatarUrl = recentPost.author.avatar;
+
+            // Create a web-compatible Bluesky URL
+            const postUrl = `https://bsky.app/profile/${authorHandle}/post/${postId}`;
 
             // Append post content under the title
             bskyDiv.innerHTML += `
@@ -31,7 +35,7 @@ async function fetchBlueskyPost() {
                     <div>
                         <strong>${postAuthor}</strong> • <small>${timeSince}</small>
                         <div>${postText}</div>
-                        <small><a href="${postUri}" target="_blank">View Post</a></small>
+                        <small><a href="${postUrl}" target="_blank">View Post</a></small>
                     </div>
                 </div>
             `;
