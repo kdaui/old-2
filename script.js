@@ -1,29 +1,19 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const bskyDiv = document.querySelector('.bsky');
-    
-    // Function to fetch the most recent Bluesky post
-    async function fetchBlueskyPost() {
-        try {
-            const response = await fetch('https://api-amber-psi.vercel.app/api/fetchBluesky');
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            const data = await response.json();
-            
-            // Assuming the data structure has the latest post in `data.post`
-            const latestPost = data.post; // Update according to your API response structure
+async function fetchBlueskyPost() {
+    try {
+        const response = await fetch('https://api-amber-psi.vercel.app/api/fetchBluesky'); // Adjust this URL based on your Vercel deployment
+        const data = await response.json();
 
-            // Update the DOM with the latest post details
-            bskyDiv.innerHTML = `
-                <h3>Bsky-ing</h3>
-                <p>${latestPost.content}</p>
-            `;
-        } catch (error) {
-            console.error('Error fetching the Bluesky post:', error);
-            bskyDiv.innerHTML = '<p>Error loading post.</p>';
+        if (!response.ok) {
+            throw new Error(data.error || 'Failed to fetch post');
         }
-    }
 
-    // Call the function to fetch and display the post
-    fetchBlueskyPost();
-});
+        // Update your div with the fetched data
+        const bskyDiv = document.querySelector('.bsky');
+        bskyDiv.innerHTML = `<h3>Bsky-ing</h3><p>${data.postContent}</p>`;
+    } catch (error) {
+        console.error("Error loading post:", error);
+        document.querySelector('.bsky').innerHTML = '<p>Error loading post.</p>';
+    }
+}
+
+fetchBlueskyPost();
