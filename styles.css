@@ -249,7 +249,15 @@ a:hover {
     margin-left: 20px;
 }
 
-.Brojects-cont {
+.Projects {
+    flex: 1;
+    min-width: 10%;
+    padding: 10px;
+    border: 1px solid #fff;
+    box-sizing: border-box;
+}
+
+.Social-cont {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -260,18 +268,34 @@ a:hover {
     gap: 20px;
 }
 
-.Projects {
+.last-fm {
     flex: 1;
-    min-width: 45%;
-    padding: 10px;
+    min-width: 50%;
+    padding-left: 10px;
     border: 1px solid #fff;
     box-sizing: border-box;
+    background-color: #000;
+    border-radius: 5px;
+    color: #fff;
 }
 
 .bsky {
-	flex: 1;
-    min-width: 70%;
-    padding: 10px;
+    flex: 1;
+    min-width: 60%;
+    padding-left: 10px;
     border: 1px solid #fff;
     box-sizing: border-box;
+    background-color: #000;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.last-fm h3, .bsky h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.last-fm p, .bsky p {
+    font-size: 14px;
+    color: #ddd;
 }
