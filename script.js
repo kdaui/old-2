@@ -67,5 +67,67 @@ function timeAgo(date) {
     return `${seconds} seconds ago`;
 }
 
-// Call the function to fetch and display the post
-fetchBlueskyPost();
+async function fetchLastTrack() {
+    try {
+        // URL of the text file containing the Last.fm API link
+        const fileUrl = 'https://lastfm-api-three.vercel.app/lastfm_url.txt ';
+        
+        // Fetch the content of the text file
+        const fileResponse = await fetch(fileUrl);
+        const apiUrl = await fileResponse.text();  // Read the content of the text file
+
+        // Ensure lastFmDiv exists
+        const lastFmDiv = document.getElementById("last-fm");
+        if (!lastFmDiv) {
+            console.error("Element with ID 'last-fm' not found.");
+            return;
+        }
+
+        // Fetch data from the API link obtained from the text file
+        const response = await fetch(apiUrl.trim());
+        if (!response.ok) {
+            throw new Error("Failed to fetch Last.fm data");
+        }
+
+        const data = await response.json();
+        console.log("Response Data:", data); // Log the full response for debugging
+
+        // Ensure the recent tracks exist
+        if (data.recenttracks.track && data.recenttracks.track.length > 0) {
+            // Get the most recent track
+            const recentTrack = data.recenttracks.track[0];
+            // Check if the track is currently playing or was recently played
+            const isPlaying = !recentTrack.date; 
+
+            // Extract relevant information
+            const trackName = recentTrack.name;
+            const artistName = recentTrack.artist['#text'];
+            const albumCover = recentTrack.image[2]['#text']; // Medium size image
+
+            // Append track content under the title
+            lastFmDiv.innerHTML = `
+                <h3>Now Playing</h3>
+                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <img src="${albumCover}" alt="${artistName}'s album cover" style="width: 120px; height: 120px; object-fit: cover; border-radius: 10px; margin-right: 15px;">
+                    <div>
+                        <strong style="font-size: 1.5em;">${trackName}</strong><br>
+                        <small style="font-size: 1.2em;">${artistName}</small>
+                    </div>
+                </div>
+                ${isPlaying ? '<p>Currently playing!</p>' : '<p>Just listened to this track.</p>'}
+            `;
+        } else {
+            console.error("No recent tracks found.");
+            lastFmDiv.innerHTML = "<h3>Now Playing</h3><p>No recent tracks found.</p>";
+        }
+    } catch (error) {
+        console.error("Error loading Last.fm data:", error);
+        document.getElementById("last-fm").innerHTML = "<h3>Now Playing</h3><p>Error loading data.</p>";
+    }
+}
+
+// Call both functions when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+    fetchBlueskyPost();
+    fetchLastTrack();
+});
