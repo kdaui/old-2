@@ -110,8 +110,8 @@ async function fetchLastTrack() {
                 <div style="display: flex; align-items: center; margin-bottom: 10px;">
                     <img src="${albumCover}" alt="${artistName}'s album cover" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px; margin-right: 15px;">
                     <div>
-                        <strong style="font-size: 1.5em;">${trackName}</strong><br>
-                        <small style="font-size: 1.2em;">${artistName}</small>
+                        <strong style="font-size: 1.2em;">${trackName}</strong><br>
+                        <small style="font-size: 1.1em;">${artistName}</small>
                     </div>
                 </div>
                 ${isPlaying ? '<p>Currently playing!</p>' : '<p>Just listened to this track.</p>'}
