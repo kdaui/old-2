@@ -1,2 +1,3 @@
 # kdaui.github.io
-## THIS IS A RE-WRITE OF THE WEBSITE, IF YOU WANT THE OLD VERSION, USE KDAUI.GITHUB.IO/OLD
+I made this for fun (and I also got dared to do this).
+Love y'all
