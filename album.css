@@ -24,6 +24,10 @@ body {
     margin: 0 auto;
 }
 
+.tion {
+	font-size: 120%;
+}
+
 .album-covers {
     display: flex;
     flex-wrap: wrap;
