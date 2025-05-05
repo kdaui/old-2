@@ -33,7 +33,8 @@ async function fetchBlueskyPost() {
                 <div style="display: flex; align-items: center; margin-bottom: 10px;">
                     <img src="${avatarUrl}" alt="${postAuthor}'s avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
                     <div>
-                        <strong>${postAuthor}</strong> • <small>${timeSince}</small>
+                        <strong>${postAuthor}</strong> • 
+                        <small title="${postCreatedAt.toLocaleString()}">${timeSince}</small>
                         <div>${postText}</div>
                         <small><a href="${postUrl}" target="_blank">View Post</a></small>
                     </div>
