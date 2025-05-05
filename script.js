@@ -6,29 +6,45 @@ async function fetchBlueskyPost() {
         }
         
         const data = await response.json();
-        console.log("Response Data:", data); // Log the full response for debugging
+        console.log("Response Data:", data);
 
-        // Ensure the feed exists and has posts
-        const bskyDiv = document.querySelector(".bsky"); // Select by class
-        bskyDiv.innerHTML = "<h3>Bsky-ing</h3>"; // Keep the title
+        const bskyDiv = document.querySelector(".bsky");
+        bskyDiv.innerHTML = "<h3>Bsky-ing</h3>";
 
         if (data.feed && data.feed.length > 0) {
-            // Get the most recent post
             const recentPost = data.feed[0].post;
-
-            // Extract relevant information
             const postText = recentPost.record.text;
             const postAuthor = recentPost.author.displayName;
-            const postCreatedAt = new Date(recentPost.createdAt);
+            
+            // Improved date handling
+            let postCreatedAt;
+            try {
+                // Try parsing the date string directly
+                postCreatedAt = new Date(recentPost.createdAt);
+                
+                // If invalid date, try alternative parsing
+                if (isNaN(postCreatedAt.getTime())) {
+                    // Try removing the fractional seconds if present
+                    const isoString = recentPost.createdAt.replace(/\.\d+/, '');
+                    postCreatedAt = new Date(isoString);
+                    
+                    // If still invalid, use current date as fallback
+                    if (isNaN(postCreatedAt.getTime())) {
+                        console.warn("Invalid date format, using current time");
+                        postCreatedAt = new Date();
+                    }
+                }
+            } catch (e) {
+                console.warn("Date parsing error:", e);
+                postCreatedAt = new Date();
+            }
+
             const timeSince = timeAgo(postCreatedAt);
-            const postId = recentPost.uri.split('/').pop(); // Get the post ID
+            const postId = recentPost.uri.split('/').pop();
             const authorHandle = recentPost.author.handle;
             const avatarUrl = recentPost.author.avatar;
-
-            // Create a web-compatible Bluesky URL
             const postUrl = `https://bsky.app/profile/${authorHandle}/post/${postId}`;
 
-            // Append post content under the title
             bskyDiv.innerHTML += `
                 <div style="display: flex; align-items: center; margin-bottom: 10px;">
                     <img src="${avatarUrl}" alt="${postAuthor}'s avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
