@@ -16,15 +16,11 @@ async function fetchBlueskyPost() {
             const postText = recentPost.record.text;
             const postAuthor = recentPost.author.displayName;
             
-            // Improved date handling
             let postCreatedAt;
             try {
-                // Try parsing the date string directly
                 postCreatedAt = new Date(recentPost.createdAt);
                 
-                // If invalid date, try alternative parsing
                 if (isNaN(postCreatedAt.getTime())) {
-                    // Try removing the fractional seconds if present
                     const isoString = recentPost.createdAt.replace(/\.\d+/, '');
                     postCreatedAt = new Date(isoString);
                     
