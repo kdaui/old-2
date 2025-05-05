@@ -16,26 +16,28 @@ async function fetchBlueskyPost() {
             const postText = recentPost.record.text;
             const postAuthor = recentPost.author.displayName;
             
-            // Improved date handling
+            // Improved date handling with fallbacks
             let postCreatedAt;
             try {
-                // Try parsing the date string directly
-                postCreatedAt = new Date(recentPost.createdAt);
-                
-                // If invalid date, try alternative parsing
-                if (isNaN(postCreatedAt.getTime())) {
-                    // Try removing the fractional seconds if present
-                    const isoString = recentPost.createdAt.replace(/\.\d+/, '');
-                    postCreatedAt = new Date(isoString);
+                // Check if createdAt exists and is a valid date string
+                if (recentPost.createdAt) {
+                    postCreatedAt = new Date(recentPost.createdAt);
                     
-                    // If still invalid, use current date as fallback
+                    // If still invalid, try alternative parsing
                     if (isNaN(postCreatedAt.getTime())) {
-                        console.warn("Invalid date format, using current time");
-                        postCreatedAt = new Date();
+                        console.warn("Invalid date format, trying cleanup");
+                        const isoString = recentPost.createdAt.replace(/\.\d+/, '');
+                        postCreatedAt = new Date(isoString);
                     }
                 }
+                
+                // Final fallback to current time if still invalid
+                if (!recentPost.createdAt || isNaN(postCreatedAt.getTime())) {
+                    console.warn("Using current time as fallback");
+                    postCreatedAt = new Date();
+                }
             } catch (e) {
-                console.warn("Date parsing error:", e);
+                console.warn("Date parsing error, using current time:", e);
                 postCreatedAt = new Date();
             }
 
