@@ -16,11 +16,15 @@ async function fetchBlueskyPost() {
             const postText = recentPost.record.text;
             const postAuthor = recentPost.author.displayName;
             
+            // Improved date handling
             let postCreatedAt;
             try {
+                // Try parsing the date string directly
                 postCreatedAt = new Date(recentPost.createdAt);
                 
+                // If invalid date, try alternative parsing
                 if (isNaN(postCreatedAt.getTime())) {
+                    // Try removing the fractional seconds if present
                     const isoString = recentPost.createdAt.replace(/\.\d+/, '');
                     postCreatedAt = new Date(isoString);
                     
@@ -64,6 +68,9 @@ async function fetchBlueskyPost() {
 
 // Function to calculate time since the post was created
 function timeAgo(date) {
+    if (isNaN(date.getTime())) {
+        return "recently";
+    }
     const now = new Date();
     const seconds = Math.floor((now - date) / 1000);
     let interval = Math.floor(seconds / 31536000);
